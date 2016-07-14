@@ -1,0 +1,59 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          goInput
+# Required-Start:    $local_fs $network $named $time $syslog
+# Required-Stop:     $local_fs $network $named $time $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Description:       start to read from physical world data and put it inside some file
+### END INIT INFO
+
+NAME="goInput"
+
+PROGRAM_PATH1="/home/pi/Documents/techlab_iot-0.2.1/script/input/iSerial.py"
+PROGRAM_PATH2="/home/pi/Documents/techlab_iot-0.2.1/script/input/iTelegram.py"
+PROGRAM_PATH3="/home/pi/Documents/techlab_iot-0.2.1/script/input/iDrive.py"
+
+LOG_PATH1="/tmp/iSerial.txt"
+LOG_PATH2="/tmp/iTelegram.txt"
+LOG_PATH3="/tmp/iDrive.txt"
+
+SCRIPT1="python $PROGRAM_PATH1 >$LOG_PATH1 &"
+SCRIPT2="python $PROGRAM_PATH2 >$LOG_PATH2 &"
+SCRIPT3="python $PROGRAM_PATH3 >$LOG_PATH3 &"
+
+RUNAS=root
+
+start() {
+  echo 'Starting service…' >&2
+  su -c "$SCRIPT1" $RUNAS
+  su -c "$SCRIPT2" $RUNAS
+  su -c "$SCRIPT3" $RUNAS
+  echo 'Service started' >&2
+}
+
+stop() {
+  echo 'Stopping service…' >&2
+
+  kill -9 $(ps aux | grep "[p]ython $PROGRAM_PATH1" | awk '{print $2}')
+  mv $LOG_PATH1 $LOG_PATH1.bak
+
+  kill -9 $(ps aux | grep "[p]ython $PROGRAM_PATH2" | awk '{print $2}')
+  mv $LOG_PATH2 $LOG_PATH2.bak
+
+  kill -9 $(ps aux | grep "[p]ython $PROGRAM_PATH3" | awk '{print $2}')
+  mv $LOG_PATH3 $LOG_PATH3.bak
+
+  echo 'Service stopped' >&2
+}
+
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  *)
+    echo "Usage: $0 {start|stop}"
+esac
