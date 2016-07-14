@@ -31,8 +31,8 @@ def handle(msg):
     if command == '/door':
         notizia = "ai tuoi ordini " + nome
         bot.sendMessage(chat_id, notizia)
-        with open(TELEGRAM_BRIDGE, 'wb') as handle:
-            handle.write(str(datetime.datetime.now()) + "," + nome + "," + command)
+        with open(TELEGRAM_BRIDGE, 'a+') as handle:
+            handle.write(str(datetime.datetime.now()) + "," + nome + "," + command + "\n")
 
 bot = telepot.Bot(TELEGRAM_KEY)
 bot.message_loop(handle)
