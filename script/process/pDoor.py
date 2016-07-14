@@ -2,6 +2,7 @@
 import os
 import sys
 import logging
+import pickle
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s: %(message)s')
 logger = logging.getLogger()
