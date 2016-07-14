@@ -32,7 +32,7 @@ def handle(msg):
         notizia = "ai tuoi ordini " + nome
         bot.sendMessage(chat_id, notizia)
         with open(TELEGRAM_BRIDGE, 'wb') as handle:
-            handle.write(str(datetime.now()) + "," + nome + "," + command)
+            handle.write(str(datetime.datetime.now()) + "," + nome + "," + command)
 
 bot = telepot.Bot(TELEGRAM_KEY)
 bot.message_loop(handle)
