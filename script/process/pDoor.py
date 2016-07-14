@@ -31,11 +31,19 @@ fkey.close()
 
 if os.path.isfile(TELEGRAM_BRIDGE_REL):
 
+    msg = []
+
     f_rel=open(TELEGRAM_BRIDGE_REL,'rb')
-    msg = pickle.load(f_rel)
-    f_rel.close()
+
+    while 1:
+        try:
+            o = pickle.load(f_rel)
+        except EOFError:
+            break
+        msg.append(o)
 
     f_rel.close()
+
     RM_FILE_COMMAND = "sudo rm " + TELEGRAM_BRIDGE_REL
     os.system(RM_FILE_COMMAND)
 
