@@ -35,7 +35,7 @@ if os.path.isfile(TELEGRAM_BRIDGE_REL):
     msg = pickle.load(f_rel)
     f_rel.close()
 
-    buff.close()
+    f_rel.close()
     RM_FILE_COMMAND = "sudo rm " + TELEGRAM_BRIDGE_REL
     os.system(RM_FILE_COMMAND)
 
