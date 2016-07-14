@@ -18,9 +18,9 @@ LOG_PATH1="/tmp/pEnergy.log"
 LOG_PATH2="/tmp/pLaser.log"
 LOG_PATH3="/tmp/pDoor.log"
 
-SCRIPT1="python $PROGRAM_PATH1 >$LOG_PATH1 &"
-SCRIPT2="python $PROGRAM_PATH2 >$LOG_PATH2 &"
-SCRIPT3="python $PROGRAM_PATH3 >$LOG_PATH3 &"
+SCRIPT1="python $PROGRAM_PATH1 2>$LOG_PATH1 &"
+SCRIPT2="python $PROGRAM_PATH2 2>$LOG_PATH2 &"
+SCRIPT3="python $PROGRAM_PATH3 2>$LOG_PATH3 &"
 
 RUNAS=root
 
