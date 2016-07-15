@@ -30,7 +30,7 @@ outputSerial_filename_rel = outputSerial_filename + ".buffer"
 
 while True:
     if os.path.isfile(inputTelegram_filename):
-
+        time.sleep(0.1)
         msgIn = []
 
         f = open(inputTelegram_filename,'rb')
