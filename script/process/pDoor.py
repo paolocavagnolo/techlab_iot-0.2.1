@@ -47,17 +47,18 @@ while True:
         RM_FILE_COMMAND = "sudo rm " + inputTelegram_filename
         os.system(RM_FILE_COMMAND)
 
+        logger.debug(msgIn)
 
-        for item in msgIn:
-            if item['text'] == '/door':
-                logger.debug("trovata un testo door")
-                msgOut = answerTelegram()
-                f_abs = open(outputSerial_filename, 'a+')
-                f_rel = open(outputSerial_filename_rel, 'a+')
-
-                pickle.dump(msgOut, f_abs)
-                pickle.dump(msgOut, f_rel)
-
-                f_abs.close()
-                f_rel.close()
-                logger.DEBUG("fatto")
+        # for item in msgIn:
+        #     if item['text'] == '/door':
+        #         logger.debug("trovata un testo door")
+        #         msgOut = answerTelegram()
+        #         f_abs = open(outputSerial_filename, 'a+')
+        #         f_rel = open(outputSerial_filename_rel, 'a+')
+        #
+        #         pickle.dump(msgOut, f_abs)
+        #         pickle.dump(msgOut, f_rel)
+        #
+        #         f_abs.close()
+        #         f_rel.close()
+        #         logger.debug("fatto")
