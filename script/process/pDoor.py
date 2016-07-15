@@ -29,36 +29,37 @@ outputSerial_filename = SYSTEM_PATH + "oFiles/" + "oSerial.plk"
 outputSerial_filename_rel = outputSerial_filename + ".buffer"
 
 while True:
+    time.sleep(1)
     if os.path.isfile(inputTelegram_filename):
-        time.sleep(0.1)
-        msgIn = []
+        if os.path.getsize(inputTelegram_filename) > 0:
+            msgIn = []
 
-        f = open(inputTelegram_filename,'rb')
+            f = open(inputTelegram_filename,'rb')
 
-        while 1:
-            try:
-                o = pickle.load(f)
-            except EOFError:
-                break
-            msgIn.append(o)
+            while 1:
+                try:
+                    o = pickle.load(f)
+                except EOFError:
+                    break
+                msgIn.append(o)
 
-        f.close()
+            f.close()
 
-        RM_FILE_COMMAND = "sudo rm " + inputTelegram_filename
-        os.system(RM_FILE_COMMAND)
+            RM_FILE_COMMAND = "sudo rm " + inputTelegram_filename
+            os.system(RM_FILE_COMMAND)
 
-        logger.debug(msgIn)
+            logger.debug(msgIn)
 
-        for item in msgIn:
-            if item['text'] == '/door':
-                logger.debug("trovata un testo door")
-                msgOut = answerTelegram()
-                f_abs = open(outputSerial_filename, 'a+')
-                f_rel = open(outputSerial_filename_rel, 'a+')
+            for item in msgIn:
+                if item['text'] == '/door':
+                    logger.debug("trovata un testo door")
+                    msgOut = answerTelegram()
+                    f_abs = open(outputSerial_filename, 'a+')
+                    f_rel = open(outputSerial_filename_rel, 'a+')
 
-                pickle.dump(msgOut, f_abs)
-                pickle.dump(msgOut, f_rel)
+                    pickle.dump(msgOut, f_abs)
+                    pickle.dump(msgOut, f_rel)
 
-                f_abs.close()
-                f_rel.close()
-                logger.debug("fatto")
+                    f_abs.close()
+                    f_rel.close()
+                    logger.debug("fatto")

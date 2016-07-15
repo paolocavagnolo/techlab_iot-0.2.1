@@ -54,5 +54,4 @@ bot = telepot.Bot(TELEGRAM_KEY)
 bot.message_loop(handle)
 
 while True:
-
-    time.sleep(10)
+    time.sleep(1)
