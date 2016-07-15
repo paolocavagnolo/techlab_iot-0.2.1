@@ -50,6 +50,7 @@ while True:
 
         for item in msgIn:
             if item['text'] == '/door':
+                logger.DEBUG("trovata un testo door")
                 msgOut = answerTelegram()
                 f_abs = open(outputSerial_filename, 'a+')
                 f_rel = open(outputSerial_filename_rel, 'a+')
@@ -59,3 +60,4 @@ while True:
 
                 f_abs.close()
                 f_rel.close()
+                logger.DEBUG("fatto")
