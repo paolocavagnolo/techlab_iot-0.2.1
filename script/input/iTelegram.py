@@ -12,7 +12,7 @@ fkeylines=fkey.readlines()
 TELEGRAM_KEY = fkeylines[11].split('\n')[0]
 fkey.close()
 
-file_name = SYSTEM_PATH + "iFiles/" + sys.argv[0].split('.')[0] + ".plk"
+file_name = SYSTEM_PATH + "iFiles/" + sys.argv[0].split('/')[4].split('.')[0] + ".plk"
 file_name_rel = file_name + ".buffer"
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s: %(message)s')
