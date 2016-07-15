@@ -3,6 +3,7 @@ import os
 import sys
 import logging
 import pickle
+from theBrain import *
 
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s: %(message)s')
 logger = logging.getLogger()
@@ -24,27 +25,26 @@ SYNC_TRIG = SYSTEM_PATH + fkeylines[13].split('\n')[0]
 PANEL_HTML = SYSTEM_PATH + fkeylines[15].split('\n')[0]
 fkey.close()
 
-# f = open('store.pckl', 'rb')
-# object = pickle.load(f)
-# f.close()
 
+while True:
+    if os.path.isfile(TELEGRAM_BRIDGE_REL):
 
-if os.path.isfile(TELEGRAM_BRIDGE_REL):
+        msg = []
 
-    msg = []
+        f_rel=open(TELEGRAM_BRIDGE_REL,'rb')
 
-    f_rel=open(TELEGRAM_BRIDGE_REL,'rb')
+        while 1:
+            try:
+                o = pickle.load(f_rel)
+            except EOFError:
+                break
+            msg.append(o)
 
-    while 1:
-        try:
-            o = pickle.load(f_rel)
-        except EOFError:
-            break
-        msg.append(o)
+        f_rel.close()
 
-    f_rel.close()
+        RM_FILE_COMMAND = "sudo rm " + TELEGRAM_BRIDGE_REL
+        os.system(RM_FILE_COMMAND)
 
-    RM_FILE_COMMAND = "sudo rm " + TELEGRAM_BRIDGE_REL
-    os.system(RM_FILE_COMMAND)
-
-    print msg
+        for item in msg:
+            if item['text'] == '/door':
+                msgOut = answerTelegram()
