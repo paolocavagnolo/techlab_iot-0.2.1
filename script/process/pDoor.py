@@ -33,7 +33,7 @@ while True:
 
         msgIn = []
 
-        f = open(inputTelegram_filename,'r')
+        f = open(inputTelegram_filename,'rb')
 
         while 1:
             try:
