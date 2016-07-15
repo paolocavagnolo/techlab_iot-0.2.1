@@ -5,12 +5,17 @@ import datetime
 import pickle
 import logging
 
-SYSTEM_PATH = '/home/pi/Documents/'
+## Retrieve keys from file
+if sys.platform == 'darwin':
+    SYSTEM_PATH = '/Users/paolo/Documents/'
+else:
+    SYSTEM_PATH = '/home/pi/Documents/'
 PATH_KEYS = SYSTEM_PATH + 'keys.txt'
 fkey=open(PATH_KEYS,'r')
 fkeylines=fkey.readlines()
 TELEGRAM_KEY = fkeylines[11].split('\n')[0]
 fkey.close()
+##
 
 file_name = SYSTEM_PATH + "iFiles/" + sys.argv[0].split('/')[7].split('.')[0] + ".plk"
 file_name_rel = file_name + ".buffer"

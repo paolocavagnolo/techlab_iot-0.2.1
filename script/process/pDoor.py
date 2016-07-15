@@ -1,4 +1,3 @@
-#from theBrain import *
 import os
 import sys
 import logging
@@ -25,26 +24,38 @@ SYNC_TRIG = SYSTEM_PATH + fkeylines[13].split('\n')[0]
 PANEL_HTML = SYSTEM_PATH + fkeylines[15].split('\n')[0]
 fkey.close()
 
+inputTelegram_filename = SYSTEM_PATH + "iFiles/" + "iTelegram.plk.buffer"
+outputSerial_filename = SYSTEM_PATH + "oFiles/" + "oSerial.plk"
+outputSerial_filename_rel = outputSerial_filename + ".buffer"
 
 while True:
-    if os.path.isfile(TELEGRAM_BRIDGE_REL):
+    if os.path.isfile(inputTelegram_filename):
 
-        msg = []
+        msgIn = []
 
-        f_rel=open(TELEGRAM_BRIDGE_REL,'rb')
+        f = open(inputTelegram_filename,'rb')
 
         while 1:
             try:
-                o = pickle.load(f_rel)
+                o = pickle.load(f)
             except EOFError:
                 break
-            msg.append(o)
+            msgIn.append(o)
 
-        f_rel.close()
+        f.close()
 
-        RM_FILE_COMMAND = "sudo rm " + TELEGRAM_BRIDGE_REL
-        os.system(RM_FILE_COMMAND)
+        RM_FILE_COMMAND = "sudo rm " + inputTelegram_filename
+        os.system(inputTelegram_filename)
 
-        for item in msg:
+
+        for item in msgIn:
             if item['text'] == '/door':
                 msgOut = answerTelegram()
+                f_abs = open(outputSerial_filename, 'a+')
+                f_rel = open(outputSerial_filename_rel, 'a+')
+
+                pickle.dump(msgOut, f_abs)
+                pickle.dump(msgOut, f_rel)
+
+                f_abs.close()
+                f_rel.close()
