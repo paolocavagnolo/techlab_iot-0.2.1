@@ -33,7 +33,7 @@ while True:
 
         msgIn = []
 
-        f = open(inputTelegram_filename,'rb')
+        f = open(inputTelegram_filename,'r')
 
         while 1:
             try:
@@ -45,7 +45,7 @@ while True:
         f.close()
 
         RM_FILE_COMMAND = "sudo rm " + inputTelegram_filename
-        os.system(inputTelegram_filename)
+        os.system(RM_FILE_COMMAND)
 
 
         for item in msgIn:
